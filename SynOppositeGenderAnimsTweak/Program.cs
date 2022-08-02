@@ -1,6 +1,6 @@
 using Mutagen.Bethesda;
-using Mutagen.Bethesda.Synthesis;
 using Mutagen.Bethesda.Skyrim;
+using Mutagen.Bethesda.Synthesis;
 
 namespace SynOppositeGenderAnimsTweak
 {
@@ -16,7 +16,14 @@ namespace SynOppositeGenderAnimsTweak
 
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
-            //Your code here!
+            foreach (var npcGetter in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
+            {
+                if (npcGetter == null) continue;
+                if (!npcGetter.Configuration.Flags.HasFlag(NpcConfiguration.Flag.OppositeGenderAnims)) continue;
+
+                Console.WriteLine($"Remove opposite gender flag for '{npcGetter.FormKey.ID}|{npcGetter.EditorID}'");
+                state.PatchMod.Npcs.GetOrAddAsOverride(npcGetter).Configuration.Flags &= ~NpcConfiguration.Flag.OppositeGenderAnims;
+            }
         }
     }
 }
