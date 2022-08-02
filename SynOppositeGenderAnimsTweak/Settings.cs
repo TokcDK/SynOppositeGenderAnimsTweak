@@ -4,6 +4,15 @@ namespace SynOppositeGenderAnimsTweak
 {
     public class Settings
     {
+        [SynthesisSettingName("Check male npcs")]
+        [SynthesisTooltip("Check male npcs for the flag. Disabled by default. Usually flag can be added for man elves")]
+        [SynthesisDescription("Check male npcs for the flag")]
+        public bool IsCheckMales { get; set; } = false;
+        [SynthesisSettingName("Check male npcs")]
+        [SynthesisTooltip("Check male npcs for the flag. Usually flag can be added for strong womans in heavy armor")]
+        [SynthesisDescription("Check male npcs for the flag")]
+        public bool IsCheckFemales { get; set; } = true;
+
         [SynthesisSettingName("Only unique npc")]
         [SynthesisTooltip("Remove opposite gender flag only from unique npcs")]
         [SynthesisDescription("Remove opposite gender flag only from unique npcs")]

@@ -19,9 +19,12 @@ namespace SynOppositeGenderAnimsTweak
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
             // set local vars
+            bool isCheckMales = PatchSettings.Value.IsCheckMales;
+            bool isCheckFemales = PatchSettings.Value.IsCheckFemales;
             bool isOnlyUnique = PatchSettings.Value.IsOnlyUnique;
             var oppositeGenderAnimsFlag = NpcConfiguration.Flag.OppositeGenderAnims;
             var uniqueFlag = NpcConfiguration.Flag.Unique;
+            var femaleFlag = NpcConfiguration.Flag.Female;
             bool isUseExcluded = PatchSettings.Value.ExcludedNPCKeywordsList.Count > 0;
             var excludedList = PatchSettings.Value.ExcludedNPCKeywordsList;
 
@@ -30,8 +33,13 @@ namespace SynOppositeGenderAnimsTweak
                 // skip invalid npcs
                 if (npcGetter == null) continue; // null
                 if (!npcGetter.Configuration.Flags.HasFlag(oppositeGenderAnimsFlag)) continue; // have no opposite gender anims flag
+                if (!isCheckMales && !npcGetter.Configuration.Flags.HasFlag(femaleFlag)) continue; // disabled males but npc is male
+                if (!isCheckFemales && npcGetter.Configuration.Flags.HasFlag(femaleFlag)) continue; // disabled females but npc is female
                 if (isOnlyUnique && !npcGetter.Configuration.Flags.HasFlag(uniqueFlag)) continue; // need only unique but not unique
-                if (isUseExcluded && !string.IsNullOrWhiteSpace(npcGetter.EditorID) && excludedList.Any(s => !string.IsNullOrWhiteSpace(s) && npcGetter.EditorID.ToLowerInvariant().Contains(s))) continue; // editor id contains one of keywords from exclusions
+                if (isUseExcluded 
+                    && !string.IsNullOrWhiteSpace(npcGetter.EditorID) 
+                    && excludedList.Any(s => !string.IsNullOrWhiteSpace(s) 
+                    && npcGetter.EditorID.ToLowerInvariant().Contains(s))) continue; // editor id contains one of keywords from exclusions
 
                 Console.WriteLine($"Remove opposite gender flag for '{npcGetter.FormKey.ID}|{npcGetter.EditorID}'");
                 state.PatchMod.Npcs.GetOrAddAsOverride(npcGetter).Configuration.Flags &= ~oppositeGenderAnimsFlag;
