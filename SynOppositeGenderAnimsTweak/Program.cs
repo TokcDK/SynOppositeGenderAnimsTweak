@@ -22,13 +22,16 @@ namespace SynOppositeGenderAnimsTweak
             bool isOnlyUnique = PatchSettings.Value.IsOnlyUnique;
             var oppositeGenderAnimsFlag = NpcConfiguration.Flag.OppositeGenderAnims;
             var uniqueFlag = NpcConfiguration.Flag.Unique;
+            bool isUseExcluded = PatchSettings.Value.ExcludedNPCKeywordsList.Count > 0;
+            var excludedList = PatchSettings.Value.ExcludedNPCKeywordsList;
 
             foreach (var npcGetter in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
             {
                 // skip invalid npcs
-                if (npcGetter == null) continue;
-                if (!npcGetter.Configuration.Flags.HasFlag(oppositeGenderAnimsFlag)) continue;
-                if (isOnlyUnique && !npcGetter.Configuration.Flags.HasFlag(uniqueFlag)) continue;
+                if (npcGetter == null) continue; // null
+                if (!npcGetter.Configuration.Flags.HasFlag(oppositeGenderAnimsFlag)) continue; // have no opposite gender anims flag
+                if (isOnlyUnique && !npcGetter.Configuration.Flags.HasFlag(uniqueFlag)) continue; // need only unique but not unique
+                if (isUseExcluded && !string.IsNullOrWhiteSpace(npcGetter.EditorID) && excludedList.Any(s => !string.IsNullOrWhiteSpace(s) && npcGetter.EditorID.ToLowerInvariant().Contains(s))) continue; // editor id contains one of keywords from exclusions
 
                 Console.WriteLine($"Remove opposite gender flag for '{npcGetter.FormKey.ID}|{npcGetter.EditorID}'");
                 state.PatchMod.Npcs.GetOrAddAsOverride(npcGetter).Configuration.Flags &= ~oppositeGenderAnimsFlag;
