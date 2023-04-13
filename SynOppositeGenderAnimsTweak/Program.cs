@@ -33,13 +33,18 @@ namespace SynOppositeGenderAnimsTweak
                 // skip invalid npcs
                 if (npcGetter == null) continue; // null
                 if (!npcGetter.Configuration.Flags.HasFlag(oppositeGenderAnimsFlag)) continue; // have no opposite gender anims flag
-                if (!isCheckMales && !npcGetter.Configuration.Flags.HasFlag(femaleFlag)) continue; // disabled males but npc is male
-                if (!isCheckFemales && npcGetter.Configuration.Flags.HasFlag(femaleFlag)) continue; // disabled females but npc is female
+
+                bool isFemale = npcGetter.Configuration.Flags.HasFlag(femaleFlag);
+                if (!isCheckMales && !isFemale) continue; // disabled males but npc is male
+                if (!isCheckFemales && isFemale) continue; // disabled females but npc is female
+
                 if (isOnlyUnique && !npcGetter.Configuration.Flags.HasFlag(uniqueFlag)) continue; // need only unique but not unique
                 if (isUseExcluded 
                     && !string.IsNullOrWhiteSpace(npcGetter.EditorID) 
                     && excludedList.Any(s => !string.IsNullOrWhiteSpace(s) 
                     && npcGetter.EditorID.ToLowerInvariant().Contains(s))) continue; // editor id contains one of keywords from exclusions
+
+                npcGetter.ChechAndFixRaceHaveOppositeAnimation(state, isFemale);
 
                 Console.WriteLine($"Remove opposite gender flag for '{npcGetter.FormKey.ID}|{npcGetter.EditorID}'");
                 state.PatchMod.Npcs.GetOrAddAsOverride(npcGetter).Configuration.Flags &= ~oppositeGenderAnimsFlag;
