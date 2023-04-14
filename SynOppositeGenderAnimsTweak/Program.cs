@@ -1,4 +1,5 @@
 using Mutagen.Bethesda;
+using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 
@@ -32,6 +33,7 @@ namespace SynOppositeGenderAnimsTweak
 
             int npcPatched = 0;
             int racePatched = 0;
+            var checkedRaces= new HashSet<FormKey>(); // not check races which already was checked, must reduce time of race patching
             foreach (var npcGetter in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
             {
                 // skip invalid npcs
@@ -53,7 +55,11 @@ namespace SynOppositeGenderAnimsTweak
                     && isUseExcludedNpcList
                     && excludedList.Contains(npcGetter.EditorID)) continue; // editor id contains one of keywords from exclusions
 
-                if (checkRaceBehavourPath && npcGetter.ChechAndFixRaceHaveOppositeAnimation(state, isFemale)) racePatched++;
+                if (checkRaceBehavourPath && !checkedRaces.Contains(npcGetter.Race.FormKey) && npcGetter.ChechAndFixRaceHaveOppositeAnimation(state, isFemale))
+                {
+                    racePatched++;
+                    checkedRaces.Add(npcGetter.Race.FormKey);
+                }
 
                 if (!npcGetter.Configuration.Flags.HasFlag(oppositeGenderAnimsFlag)) continue; // have no opposite gender anims flag
 
