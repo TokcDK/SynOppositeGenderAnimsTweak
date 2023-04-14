@@ -41,8 +41,6 @@ namespace SynOppositeGenderAnimsTweak
             var checkedRaces = checkRaceBehavourPath ? new HashSet<FormKey>() : null; // not check races which already was checked, must reduce time of race patching
             foreach (var npcGetter in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
             {
-                if (npcGetter == null) continue; // null
-
                 // check gender check options
                 bool isFemale = npcGetter.Configuration.Flags.HasFlag(femaleFlag);
                 if (isFemale && !isCheckFemales) continue; // disabled females but npc is female
