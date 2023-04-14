@@ -27,11 +27,11 @@ namespace SynOppositeGenderAnimsTweak
             bool needPathChange = false;
             if (isFemale)
             {
-                needPathChange = raceGetter.BehaviorGraph?.Female?.File.DataRelativePath == "Actors\\Character\\DefaultMale.hkx";
+                needPathChange = raceGetter.BehaviorGraph?.Female?.File.DataRelativePath == "Meshes\\Actors\\Character\\DefaultMale.hkx";
             }
             else if (!isFemale)
             {
-                needPathChange = raceGetter.BehaviorGraph?.Male?.File.DataRelativePath == "Actors\\Character\\DefaultFemale.hkx";
+                needPathChange = raceGetter.BehaviorGraph?.Male?.File.DataRelativePath == "Meshes\\Actors\\Character\\DefaultFemale.hkx";
             }
 
             if (!needPathChange) return false;
@@ -40,11 +40,11 @@ namespace SynOppositeGenderAnimsTweak
 
             if (isFemale)
             {
-                raceToChange.BehaviorGraph!.Female!.File.SetPath("Actors\\Character\\DefaultFemale.hkx");
+                raceToChange.BehaviorGraph!.Female!.File.SetPath("Meshes\\Actors\\Character\\DefaultFemale.hkx");
             }
             else
             {
-                raceToChange.BehaviorGraph!.Female!.File.SetPath("Actors\\Character\\DefaultMale.hkx");
+                raceToChange.BehaviorGraph!.Female!.File.SetPath("Meshes\\Actors\\Character\\DefaultMale.hkx");
             }
 
             Console.WriteLine($"Fix race behavour file path for'{raceToChange.FormKey.ID}|{raceToChange.EditorID}'");

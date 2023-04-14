@@ -33,29 +33,29 @@ namespace SynOppositeGenderAnimsTweak
 
             int npcPatched = 0;
             int racePatched = 0;
-            var checkedRaces= new HashSet<FormKey>(); // not check races which already was checked, must reduce time of race patching
+            var checkedRaces = checkRaceBehavourPath ? null : new HashSet<FormKey>(); // not check races which already was checked, must reduce time of race patching
             foreach (var npcGetter in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
             {
                 // skip invalid npcs
                 if (npcGetter == null) continue; // null
-                if (npcGetter.EditorID == "LashGraDushnikh")
-                {
+                //if (npcGetter.EditorID == "LashGraDushnikh")
+                //{
 
-                }
+                //}
 
-                Console.WriteLine($"1");
                 bool isFemale = npcGetter.Configuration.Flags.HasFlag(femaleFlag);
-                if (isFemale) if (!isCheckFemales) continue; // disabled females but npc is female
-                    else if (!isCheckMales) continue; // disabled males but npc is male
+                if (isFemale && !isCheckFemales) continue; // disabled females but npc is female
+                else if (!isFemale && !isCheckMales) continue; // disabled males but npc is male
 
-                Console.WriteLine($"2");
                 if (isOnlyUnique && !npcGetter.Configuration.Flags.HasFlag(uniqueFlag)) continue; // need only unique but not unique
                 if (isUseExcluded
                     && !string.IsNullOrWhiteSpace(npcGetter.EditorID)
                     && isUseExcludedNpcList
                     && excludedList.Contains(npcGetter.EditorID)) continue; // editor id contains one of keywords from exclusions
 
-                if (checkRaceBehavourPath && !checkedRaces.Contains(npcGetter.Race.FormKey) && npcGetter.ChechAndFixRaceHaveOppositeAnimation(state, isFemale))
+                if (checkRaceBehavourPath
+                    && !checkedRaces!.Contains(npcGetter.Race.FormKey)
+                    && npcGetter.ChechAndFixRaceHaveOppositeAnimation(state, isFemale))
                 {
                     racePatched++;
                     checkedRaces.Add(npcGetter.Race.FormKey);

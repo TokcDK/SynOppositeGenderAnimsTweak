@@ -26,7 +26,7 @@ namespace SynOppositeGenderAnimsTweak
         [SynthesisSettingName("Check race behavour path")]
         [SynthesisTooltip(_checkRaceBehDescr)]
         [SynthesisDescription(_checkRaceBehDescr)]
-        public bool CheckRaceBehavourPath { get; set; } = false;
+        public bool CheckRaceBehavourPath { get; set; } = true;
 
         [SynthesisSettingName("Excluded npc formid keywords")]
         [SynthesisTooltip("Enter here keywords wich is containing in npc's editorid which must be excluded.\nFor example keyword 'bandit' will skip all records where is editorid contains string 'bandit'. Case insensetive.")]
