@@ -46,6 +46,8 @@ namespace SynOppositeGenderAnimsTweak
             {
                 raceToChange.BehaviorGraph!.Female!.File.SetPath("Actors\\Character\\DefaultMale.hkx");
             }
+
+            Console.WriteLine($"Fix race behavour file path for'{raceToChange.FormKey.ID}|{raceToChange.EditorID}'");
         }
     }
 }
