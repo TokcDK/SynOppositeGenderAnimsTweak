@@ -1,4 +1,5 @@
 ﻿using Mutagen.Bethesda.Synthesis.Settings;
+using SettingsExtensions;
 
 namespace SynOppositeGenderAnimsTweak
 {
@@ -24,9 +25,14 @@ namespace SynOppositeGenderAnimsTweak
         [SynthesisDescription("Check races behavour path")]
         public bool CheckRaceBehavourPath { get; set; } = true;
 
-        [SynthesisSettingName("Excluded npc formid keywords")]
+        [SynthesisSettingName("Excluded npc EditorID")]
+        [SynthesisTooltip("List of NPC EditorID to skip. Case sensitive. Use Extended list if need to skip more.")]
+        [SynthesisDescription("List of npc editorid which must be excluded")]
+        public List<string> ExcludedNPCKeywordsList { get; set; } = new List<string>();
+
+        [SynthesisOrder]
         [SynthesisTooltip("Enter here keywords wich is containing in npc's editorid which must be excluded.\nFor example keyword 'bandit' will skip all records where is editorid contains string 'bandit'. Case insensetive.")]
         [SynthesisDescription("List of keywords containing in npc editorid which must be excluded")]
-        public List<string> ExcludedNPCKeywordsList { get; set; } = new List<string>();
+        public HashSet<StringCompareSettingGroup> ExcludedNPCKeywordsListExtended = new();
     }
 }
