@@ -53,12 +53,11 @@ namespace SynOppositeGenderAnimsTweak
                     && isUseExcludedNpcList
                     && excludedList.Contains(npcGetter.EditorID)) continue; // editor id contains one of keywords from exclusions
 
-                if (checkRaceBehavourPath
-                    && !checkedRaces!.Contains(npcGetter.Race.FormKey)
-                    && npcGetter.ChechAndFixRaceHaveOppositeAnimation(state, isFemale))
+                if (checkRaceBehavourPath && !checkedRaces!.Contains(npcGetter.Race.FormKey))
                 {
-                    racePatched++;
                     checkedRaces.Add(npcGetter.Race.FormKey);
+
+                    if (npcGetter.ChechAndFixRaceHaveOppositeAnimation(state, isFemale)) racePatched++;
                 }
 
                 if (!npcGetter.Configuration.Flags.HasFlag(oppositeGenderAnimsFlag)) continue; // have no opposite gender anims flag
