@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mutagen.Bethesda;
+﻿using Mutagen.Bethesda;
+using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 
@@ -11,6 +7,8 @@ namespace SynOppositeGenderAnimsTweak
 {
     public static class Ext
     {
+        static readonly FormKey actorTypeNPCKeyword = FormKey.Factory("013794:Skyrim.esm");
+
         /// <summary>
         /// get race and check gender specific behavour path
         /// </summary>
@@ -23,6 +21,9 @@ namespace SynOppositeGenderAnimsTweak
             {
                 return false;
             }
+
+            // ignore all races where is missing ActorTypeNPC keyword
+            if (raceGetter.Keywords == null || !raceGetter.Keywords.Contains(actorTypeNPCKeyword)) return false;
 
             bool needPathChange = false;
             if (isFemale)
