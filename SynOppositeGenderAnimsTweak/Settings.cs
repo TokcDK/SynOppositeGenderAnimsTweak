@@ -4,28 +4,24 @@ namespace SynOppositeGenderAnimsTweak
 {
     public class Settings
     {
-        const string _checkMalesDescr = "Check Male npcs for the flag. Disabled by default. Usually flag can be added for man elves.";
         [SynthesisSettingName("Check Male npcs")]
-        [SynthesisTooltip(_checkMalesDescr)]
-        [SynthesisDescription(_checkMalesDescr)]
+        [SynthesisTooltip("Check Male npcs for the flag. Disabled by default. Usually flag can be added for man elves.")]
+        [SynthesisDescription("Check Male npcs")]
         public bool IsCheckMales { get; set; } = false;
 
-        const string _checkFemalesDescr = "Check Female npcs for the flag. Usually flag can be added for strong womans in heavy armor.";
         [SynthesisSettingName("Check Female npcs")]
-        [SynthesisTooltip(_checkFemalesDescr)]
-        [SynthesisDescription(_checkFemalesDescr)]
+        [SynthesisTooltip("Check Female npcs for the flag. Usually flag can be added for strong womans in heavy armor.")]
+        [SynthesisDescription("Check Female npcs")]
         public bool IsCheckFemales { get; set; } = true;
 
-        const string _onlyUniqueDescr = "Remove opposite gender flag only from unique npcs";
         [SynthesisSettingName("Only unique npc")]
-        [SynthesisTooltip(_onlyUniqueDescr)]
-        [SynthesisDescription(_onlyUniqueDescr)]
+        [SynthesisTooltip("Remove opposite gender flag only from unique npcs")]
+        [SynthesisDescription("Remove opposite gender flag only from unique npcs")]
         public bool IsOnlyUnique { get; set; } = false;
 
-        const string _checkRaceBehDescr = "Some races like Ork can have no opposite gender flag\nbut have same animation flag for both genders.\nThe option will enable checking races like Orc and will change male animation of womans to female";
         [SynthesisSettingName("Check race behavour path")]
-        [SynthesisTooltip(_checkRaceBehDescr)]
-        [SynthesisDescription(_checkRaceBehDescr)]
+        [SynthesisTooltip("Some races like Ork can have no opposite gender flag\nbut have same animation flag for both genders.\nThe option will enable checking races like Orc and will change male animation of womans to female")]
+        [SynthesisDescription("Check races behavour path")]
         public bool CheckRaceBehavourPath { get; set; } = true;
 
         [SynthesisSettingName("Excluded npc formid keywords")]

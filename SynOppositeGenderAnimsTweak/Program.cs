@@ -33,7 +33,7 @@ namespace SynOppositeGenderAnimsTweak
 
             int npcPatched = 0;
             int racePatched = 0;
-            var checkedRaces = checkRaceBehavourPath ? null : new HashSet<FormKey>(); // not check races which already was checked, must reduce time of race patching
+            var checkedRaces = checkRaceBehavourPath ? new HashSet<FormKey>() : null; // not check races which already was checked, must reduce time of race patching
             foreach (var npcGetter in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
             {
                 // skip invalid npcs
