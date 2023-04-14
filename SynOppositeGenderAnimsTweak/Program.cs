@@ -28,13 +28,15 @@ namespace SynOppositeGenderAnimsTweak
             var femaleFlag = NpcConfiguration.Flag.Female;
             bool isUseExcluded = PatchSettings.Value.ExcludedNPCKeywordsList.Count > 0;
             var excludedList = PatchSettings.Value.ExcludedNPCKeywordsList;
-            bool isUseExcludedNpcList = excludedList.Count>0 && excludedList.Any(s => !string.IsNullOrWhiteSpace(s));
+            bool isUseExcludedNpcList = excludedList.Count > 0 && excludedList.Any(s => !string.IsNullOrWhiteSpace(s));
 
+            int npcPatched = 0;
+            int racePatched = 0;
             foreach (var npcGetter in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
             {
                 // skip invalid npcs
                 if (npcGetter == null) continue; // null
-                if(npcGetter.EditorID== "LashGraDushnikh")
+                if (npcGetter.EditorID == "LashGraDushnikh")
                 {
 
                 }
@@ -42,22 +44,25 @@ namespace SynOppositeGenderAnimsTweak
                 Console.WriteLine($"1");
                 bool isFemale = npcGetter.Configuration.Flags.HasFlag(femaleFlag);
                 if (isFemale) if (!isCheckFemales) continue; // disabled females but npc is female
-                else if (!isCheckMales) continue; // disabled males but npc is male
+                    else if (!isCheckMales) continue; // disabled males but npc is male
 
                 Console.WriteLine($"2");
                 if (isOnlyUnique && !npcGetter.Configuration.Flags.HasFlag(uniqueFlag)) continue; // need only unique but not unique
-                if (isUseExcluded 
-                    && !string.IsNullOrWhiteSpace(npcGetter.EditorID) 
+                if (isUseExcluded
+                    && !string.IsNullOrWhiteSpace(npcGetter.EditorID)
                     && isUseExcludedNpcList
                     && excludedList.Contains(npcGetter.EditorID)) continue; // editor id contains one of keywords from exclusions
 
-                if (checkRaceBehavourPath) npcGetter.ChechAndFixRaceHaveOppositeAnimation(state, isFemale);
+                if (checkRaceBehavourPath && npcGetter.ChechAndFixRaceHaveOppositeAnimation(state, isFemale)) racePatched++;
 
                 if (!npcGetter.Configuration.Flags.HasFlag(oppositeGenderAnimsFlag)) continue; // have no opposite gender anims flag
 
                 Console.WriteLine($"Remove opposite gender flag for '{npcGetter.FormKey.ID}|{npcGetter.EditorID}'");
                 state.PatchMod.Npcs.GetOrAddAsOverride(npcGetter).Configuration.Flags &= ~oppositeGenderAnimsFlag;
+                npcPatched++;
             }
+
+            Console.WriteLine($"Finished! Patched {npcPatched} npcs and {racePatched} races.");
         }
     }
 }

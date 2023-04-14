@@ -17,11 +17,11 @@ namespace SynOppositeGenderAnimsTweak
         /// <param name="npcGetter"></param>
         /// <param name="state"></param>
         /// <param name="isFemale"></param>
-        public static void ChechAndFixRaceHaveOppositeAnimation(this INpcGetter npcGetter, IPatcherState<ISkyrimMod, ISkyrimModGetter> state, bool isFemale)
+        public static bool ChechAndFixRaceHaveOppositeAnimation(this INpcGetter npcGetter, IPatcherState<ISkyrimMod, ISkyrimModGetter> state, bool isFemale)
         {
             if (!npcGetter.Race.TryResolve<IRaceGetter>(state.LinkCache, out IRaceGetter? raceGetter))
             {
-                return;
+                return false;
             }
 
             bool needPathChange = false;
@@ -34,7 +34,7 @@ namespace SynOppositeGenderAnimsTweak
                 needPathChange = raceGetter.BehaviorGraph?.Male?.File.DataRelativePath == "Actors\\Character\\DefaultFemale.hkx";
             }
 
-            if (!needPathChange) return;
+            if (!needPathChange) return false;
 
             var raceToChange = state.PatchMod.Races.GetOrAddAsOverride(raceGetter);
 
@@ -48,6 +48,8 @@ namespace SynOppositeGenderAnimsTweak
             }
 
             Console.WriteLine($"Fix race behavour file path for'{raceToChange.FormKey.ID}|{raceToChange.EditorID}'");
+
+            return true; // race was patched
         }
     }
 }
