@@ -39,6 +39,7 @@ namespace SynOppositeGenderAnimsTweak
 
             var raceToChange = state.PatchMod.Races.GetOrAddAsOverride(raceGetter);
 
+            // patch race
             if (isFemale)
             {
                 raceToChange.BehaviorGraph!.Female!.File.SetPath("Meshes\\Actors\\Character\\DefaultFemale.hkx");
@@ -47,7 +48,6 @@ namespace SynOppositeGenderAnimsTweak
             {
                 raceToChange.BehaviorGraph!.Female!.File.SetPath("Meshes\\Actors\\Character\\DefaultMale.hkx");
             }
-
             Console.WriteLine($"Fix race behavour file path for'{raceToChange.FormKey.ID}|{raceToChange.EditorID}'");
 
             return true; // race was patched

@@ -38,10 +38,6 @@ namespace SynOppositeGenderAnimsTweak
             {
                 // skip invalid npcs
                 if (npcGetter == null) continue; // null
-                //if (npcGetter.EditorID == "LashGraDushnikh")
-                //{
-
-                //}
 
                 bool isFemale = npcGetter.Configuration.Flags.HasFlag(femaleFlag);
                 if (isFemale && !isCheckFemales) continue; // disabled females but npc is female
@@ -62,6 +58,7 @@ namespace SynOppositeGenderAnimsTweak
 
                 if (!npcGetter.Configuration.Flags.HasFlag(oppositeGenderAnimsFlag)) continue; // have no opposite gender anims flag
 
+                // patch npc
                 Console.WriteLine($"Remove opposite gender flag for '{npcGetter.FormKey.ID}|{npcGetter.EditorID}'");
                 state.PatchMod.Npcs.GetOrAddAsOverride(npcGetter).Configuration.Flags &= ~oppositeGenderAnimsFlag;
                 npcPatched++;
