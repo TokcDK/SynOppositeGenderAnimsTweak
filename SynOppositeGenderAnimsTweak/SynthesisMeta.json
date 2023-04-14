@@ -2,7 +2,7 @@
   "Nickname": "SynOppositeGenderAnimsTweak",
   "Visibility": "Visible",
   "OneLineDescription": "Opposite gender flag remover",
-  "LongDescription": "Removes Opposite gender flag from npc which have it\nCheck settings to setup prefered options",
+  "LongDescription": "When some woman npc using opposite gender flag she will be using male animations.\n\nThe patcher removes Opposite gender flag from npc which have it.\nFemale wilth removed flag will be using female animations.\nCheck settings to setup prefered options",
   "PreferredAutoVersioning": "Default",
   "RequiredMods": [],
   "TargetedReleases": []
