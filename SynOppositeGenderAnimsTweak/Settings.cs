@@ -25,7 +25,7 @@ namespace SynOppositeGenderAnimsTweak
 
         [SynthesisOrder]
         [SynthesisSettingName("Check race behavour path")]
-        [SynthesisTooltip("Some races like Ork can have no opposite gender flag\nbut have same animation flag for both genders.\nThe option will enable checking races like Orc and will change male animation of womans to female")]
+        [SynthesisTooltip("Some races like Ork can have no opposite gender flag\nbut have same animation flag for both genders (male animation for females).\nThe option will enable checking and changing the animation behavour flag if found any.")]
         [SynthesisDescription("Check races behavour path")]
         public bool CheckRaceBehavourPath { get; set; } = true;
 
